@@ -67,6 +67,14 @@ public class ActualizarVistas {
         }
         tx = s.beginTransaction();
         try {
+            System.out.println("view_sumapartidaremesa:");
+            s.createSQLQuery("DROP TABLE IF EXISTS view_sumapartidaremesa").executeUpdate();
+            tx.commit();
+        } catch (Exception ex) {
+            tx.rollback();
+        }
+        tx = s.beginTransaction();
+        try {
             System.out.println("view_listadiagnostico:");
             s.createSQLQuery("DROP TABLE IF EXISTS view_listadiagnostico").executeUpdate();
             tx.commit();
@@ -86,7 +94,9 @@ public class ActualizarVistas {
         //<editor-fold defaultstate="collapsed" desc="suma desglose cobertura">
         String sumaDesgloseCobertura = " DROP VIEW IF EXISTS view_sumadesglosecobertura CASCADE;"
                 + " CREATE OR REPLACE VIEW view_sumadesglosecobertura AS "
-                + "	SELECT sini_detallesiniestro.id, "
+                + "	SELECT "
+                + "     (sini_detallesiniestro.id ||'-'|| sini_desglosecobertura.cobertura_id) id,"
+                + "     sini_detallesiniestro.id detallesiniestro_id, "
                 + "	ROUND(CAST(SUM(sini_desglosecobertura.montoamparado) AS NUMERIC),2) AS montoamparado, "
                 + "	ROUND(CAST(SUM(sini_desglosecobertura.montofacturado) AS NUMERIC),2) AS montofacturado, "
                 + "	ROUND(CAST(SUM(sini_desglosecobertura.montonoamparado) AS NUMERIC),2) AS montonoamparado, "
@@ -100,7 +110,7 @@ public class ActualizarVistas {
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="agotamiento">
-        String agotamiento =  " DROP VIEW IF EXISTS view_agotamiento CASCADE;"
+        String agotamiento = " DROP VIEW IF EXISTS view_agotamiento CASCADE;"
                 + " CREATE OR REPLACE VIEW view_agotamiento AS "
                 + "SELECT (siniestro2_.asegurado_id||'-'||diagnostic0_.diagnostico_id||'-'|| siniestro2_.ayo) AS id, "
                 + "siniestro2_.asegurado_id, diagnostic0_.diagnostico_id,  "
@@ -256,21 +266,25 @@ public class ActualizarVistas {
         //<editor-fold defaultstate="collapsed" desc="Lista Diagnostico">
         String listaDiagnostico = " DROP VIEW IF EXISTS view_listadiagnostico CASCADE;"
                 + "CREATE OR REPLACE VIEW view_listadiagnostico AS "
-                + " SELECT (siniestro.id||'-'||detalleSiniestro.id||'-'||diagnosticoSiniestro.id) id,"
-                + " siniestro.id siniestro_id,"
-                + " detalleSiniestro.id detalleSiniestro_id,"
-                + " diagnosticoSiniestro.id diagnosticoSiniestro_id"
-                + " FROM "
-                + " sini_siniestro siniestro,"
-                + " sini_detalleSiniestro detalleSiniestro,"
-                + " sini_diagnosticoSiniestro diagnosticoSiniestro"
-                + " WHERE siniestro.id=detalleSiniestro.siniestro_id"
-                + " AND diagnosticoSiniestro.detalleSiniestro_id=detalleSiniestro.id;"
+                + " SELECT DISTINCT (((siniestro0_.id || '-') || "
+                + " CASE"
+                + " WHEN detallesin1_.id IS NOT NULL THEN detallesin1_.id"
+                + " ELSE (-1)"
+                + " END) || '-') || "
+                + " CASE"
+                + " WHEN diag.diagnostico_id IS NOT NULL THEN diag.diagnostico_id"
+                + " ELSE (-1)"
+                + " END AS id, siniestro0_.id AS siniestro_id, detallesin1_.id AS detallesiniestro_id, diag.diagnostico_id"
+                + " FROM sini_siniestro siniestro0_"
+                + " LEFT JOIN sini_detallesiniestro detallesin1_ ON siniestro0_.id = detallesin1_.siniestro_id"
+                + " LEFT JOIN sini_diagnosticosiniestro diag ON detallesin1_.id = diag.detallesiniestro_id"
+                + " ORDER BY siniestro0_.id;"
                 + " ALTER TABLE view_listadiagnostico OWNER TO postgres;";
         //</editor-fold>
 
         //<editor-fold defaultstate="collapsed" desc="Suma Partida">
-        String sumaPartida = "CREATE OR REPLACE VIEW view_sumapartida AS "
+        String sumaPartida = " DROP VIEW IF EXISTS view_sumapartida CASCADE;"
+                + "CREATE OR REPLACE VIEW view_sumapartida AS "
                 + " SELECT (detallesin0_.ordendepago_id||'-'||tipocontra4_.partidapresupuestaria_id) AS id,"
                 + " tipocontra4_.partidapresupuestaria_id partidapresupuestaria_id,"
                 + " detallesin0_.ordendepago_id ordendepago_id,"
@@ -295,6 +309,14 @@ public class ActualizarVistas {
                 + " ALTER TABLE view_sumapartida OWNER TO postgres;";
         //</editor-fold>
 
+        //<editor-fold defaultstate="collapsed" desc="sumaPartidaRemesa">
+        String sumaPartidaRemesa = " CREATE OR REPLACE VIEW view_sumapartidaremesa AS "
+                + "  SELECT (pago_ordendepago.remesa_id || '-' || view_sumapartida.partidapresupuestaria_id) AS id, pago_ordendepago.remesa_id, view_sumapartida.partidapresupuestaria_id, sum(view_sumapartida.cantidaddetalles) AS cantidaddetalles, sum(view_sumapartida.cantidadfacturas) AS cantidadfacturas, sum(view_sumapartida.baseislr) AS baseislr, sum(view_sumapartida.baseiva) AS baseiva, sum(view_sumapartida.gastosclinicos) AS gastosclinicos, sum(view_sumapartida.honorariosmedicos) AS honorariosmedicos, sum(view_sumapartida.montoamparado) AS montoamparado, sum(view_sumapartida.montoretenciondeducible) AS montoretenciondeducible, sum(view_sumapartida.montoretencionprontopago) AS montoretencionprontopago, sum(view_sumapartida.montoiva) AS montoiva, sum(view_sumapartida.montonoamparado) AS montonoamparado, sum(view_sumapartida.montoretencionislr) AS montoretencionislr, sum(view_sumapartida.montoretencioniva) AS montoretencioniva, sum(view_sumapartida.montoretenciontm) AS montoretenciontm, sum(view_sumapartida.totalacancelar) AS totalacancelar, sum(view_sumapartida.totalfacturado) AS totalfacturado, sum(view_sumapartida.totalliquidado) AS totalliquidado, sum(view_sumapartida.totalretenido) AS totalretenido"
+                + "    FROM view_sumapartida, pago_ordendepago"
+                + "   WHERE pago_ordendepago.id = view_sumapartida.ordendepago_id"
+                + "   GROUP BY pago_ordendepago.remesa_id, view_sumapartida.partidapresupuestaria_id;"
+                + " ALTER TABLE view_sumapartidaremesa OWNER TO postgres;";
+        //</editor-fold>
         s.createSQLQuery(sumaDesgloseCobertura
                 + agotamiento
                 + sumaFactura
@@ -302,7 +324,8 @@ public class ActualizarVistas {
                 + sumaOrden
                 + sumaRemesa
                 + listaDiagnostico
-                + sumaPartida).executeUpdate();
+                + sumaPartida
+                + sumaPartidaRemesa).executeUpdate();
 
         tx.commit();
         System.out.println("Vistas Creadas");

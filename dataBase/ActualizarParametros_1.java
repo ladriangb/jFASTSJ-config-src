@@ -1,9 +1,12 @@
 package dataBase;
 
 import com.jswitch.base.modelo.HibernateUtil;
+import com.jswitch.siniestros.modelo.maestra.DetalleSiniestro;
 import com.jswitch.siniestros.modelo.maestra.DiagnosticoSiniestro;
-import com.jswitch.vistasbd.ListaDiagnostico;
-import com.jswitch.vistasbd.SumaPartida;
+import com.jswitch.siniestros.modelo.maestra.Siniestro;
+import com.jswitch.vistasbd.SumaPartidaRemesa;
+import java.util.Date;
+import java.util.List;
 import org.hibernate.classic.Session;
 
 /**
@@ -16,19 +19,33 @@ public class ActualizarParametros_1 {
         System.out.println("Act Parametros");
         Session s = HibernateUtil.getSessionFactory().openSession();
         System.out.println("sesion abierta");
+        System.out.println(
+                s.createQuery("FROM " + SumaPartidaRemesa.class.getName()).list());
 
         //Transaction tx = s.beginTransaction();
         System.out.println("transaccion begin");
 
-        System.out.println("---------*----------------");
+
 
 //4716
 
 //1673
-        String sql = "FROM " + ListaDiagnostico.class.getName() + " C ";
-        
-        System.out.println(s.createQuery(sql).list());
+        String sql = "FROM " + Siniestro.class.getName() + " where ayo=?";
+        List<Siniestro> l = s.createQuery(sql).setInteger(0, 2010).setFirstResult(0).setMaxResults(10).list();
+        System.out.println("---------*----------------");
+        System.out.println("---------*----------------");
+        System.out.println("---------*----------------");
+        System.out.println("---------*----------------");
+        System.out.println("---------*----------------");
+        System.out.println("---------*----------------");
 
+        s.beginTransaction();
+        int i = s.createQuery("UPDATE " + DetalleSiniestro.class.getName()
+                + " D SET D.fechaLiquidado=? WHERE siniestro in (:sini)").
+                setDate(0, new Date()).setParameterList("sini", l).executeUpdate();
+
+        System.out.println(i);
+        s.getTransaction().commit();
 //           Response res = HibernateUtils.getAllFromQuery(
 //                    filteredColumns,
 //                    currentSortedColumns,
@@ -58,17 +75,17 @@ public class ActualizarParametros_1 {
 
 
 
-        s.createQuery("SELECT D.detalleSiniestro.siniestro.ayo, D.detalleSiniestro.siniestro.asegurado.id, "
-                + "D.diagnostico.id, SUM(D.montoPagado) "
-                + " FROM "
-                + DiagnosticoSiniestro.class.getName() + " as D WHERE "
-                //+ "detalleSiniestro.siniestro.asegurado.id=:aseg AND "
-                //+ "diagnostico.id=:diag AND "
-                + " UPPER(D.detalleSiniestro.etapaSiniestro.estatusSiniestro.nombre)=:estatus "
-                + " GROUP BY D.detalleSiniestro.siniestro.asegurado.id,"
-                + " D.detalleSiniestro.siniestro.ayo, D.diagnostico.id") //.setLong("aseg", a.getId())
-                //.setLong("diag", d.getId())
-                .setString("estatus", "PAGADO").list();
+//        s.createQuery("SELECT D.detalleSiniestro.siniestro.ayo, D.detalleSiniestro.siniestro.asegurado.id, "
+//                + "D.diagnostico.id, SUM(D.montoPagado) "
+//                + " FROM "
+//                + DiagnosticoSiniestro.class.getName() + " as D WHERE "
+//                //+ "detalleSiniestro.siniestro.asegurado.id=:aseg AND "
+//                //+ "diagnostico.id=:diag AND "
+//                + " UPPER(D.detalleSiniestro.etapaSiniestro.estatusSiniestro.nombre)=:estatus "
+//                + " GROUP BY D.detalleSiniestro.siniestro.asegurado.id,"
+//                + " D.detalleSiniestro.siniestro.ayo, D.diagnostico.id") //.setLong("aseg", a.getId())
+//                //.setLong("diag", d.getId())
+//                .setString("estatus", "PAGADO").list();
 
         //System.out.println(pagado);
 //        Double pendiente = (Double) s.createQuery("SELECT SUM(montoPagado+montoPendiente) FROM "

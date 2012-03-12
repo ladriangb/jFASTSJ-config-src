@@ -23,7 +23,6 @@ import com.jswitch.persona.modelo.maestra.Rif;
 import com.jswitch.base.modelo.entidades.TipoDocumento;
 import com.jswitch.asegurados.modelo.dominio.Departamento;
 import com.jswitch.asegurados.modelo.dominio.Parentesco;
-import com.jswitch.configuracion.modelo.maestra.Plan;
 import com.jswitch.configuracion.modelo.dominio.PlazoEspera;
 import com.jswitch.asegurados.modelo.dominio.TipoContrato;
 import com.jswitch.base.modelo.entidades.defaultData.ConfiguracionesGenerales;
