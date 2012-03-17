@@ -39,7 +39,7 @@ public class LlenarMenu {
             }
             root.getItems().add(personas);
             // </editor-fold>
-            
+
             // <editor-fold defaultstate="collapsed" desc="Polizas">
             Item poliza = new Item("Polizas", null, a);
 
@@ -84,60 +84,60 @@ public class LlenarMenu {
             }
             root.getItems().add(aseguradosFolder);
             // </editor-fold>
-           
+
             // <editor-fold defaultstate="collapsed" desc="Siniestros">
             Item siniestro = new Item("Siniestros", null, a);
             {
                 Item siniestroNuevo = new Item("Nuevo", "SIN", "insert2.png", "getSiniestroNuevo", a);
-                Item siniestros = new Item("Todos", "SIN", "poliza.png", "getSiniestros", a);
-                Item buscarSin = new Item("Buscar", "SIN", "find.png", "getBuscarSin", a);
-                
-                Item aps = new Item("Atencion Primaria de Servicio (APS)", null, a);
-                Item searchAps = new Item("Todos APS", "SIN", "poliza.png", "getApsGrid", a);
+//                Item siniestros = new Item("Todos", "SIN", "poliza.png", "getSiniestros", a);
+                Item buscarSin = new Item("Buscar Siniestros", "SIN", "find.png", "getBuscarSin", a);
 
-                Item ayudaSocial = new Item("Ayudas Sociales", null, a);
-                Item searchAS = new Item("Lista de  Ayudas Sociales", "SIN", "poliza.png", "getAyudaSocialGrid", a);
+//                Item aps = new Item("Atencion Primaria de Servicio (APS)", null, a);
+//                Item searchAps = new Item("Todos APS", "SIN", "poliza.png", "getApsGrid", a);
+//
+//                Item ayudaSocial = new Item("Ayudas Sociales", null, a);
+//                Item searchAS = new Item("Lista de  Ayudas Sociales", "SIN", "poliza.png", "getAyudaSocialGrid", a);
+//
+//                Item cartaAval = new Item("Carta Aval", null, a);
+//                Item searchAval = new Item("Lista de  Cartas Aval", "SIN", "poliza.png", "getCartaAvalGrid", a);
+//
+//                Item emergencia = new Item("Emergencias", null, a);
+//                Item emergenciaBuscar = new Item("Lista de Emergencias", "SIN", "poliza.png", "getEmergenciaGrid", a);
+//
+//                Item funerario = new Item("Funerarios", null, a);
+//                Item searchFune = new Item("Lista de Gastos Funerarios", "SIN", "poliza.png", "getFunerarioGrid", a);
+//
+//                Item reembolsos = new Item("Reembolsos", null, a);
+//                Item searchReem = new Item("Lista de Reembolsos", "SIN", "poliza.png", "getReembolsoGrid", a);
+//
+//                Item vida = new Item("Vida", null, a);
+//                Item searchVida = new Item("Lista de Imdemnizaccion por Vida", "SIN", "poliza.png", "getVidaGrid", a);
 
-                Item cartaAval = new Item("Carta Aval", null, a);
-                Item searchAval = new Item("Lista de  Cartas Aval", "SIN", "poliza.png", "getCartaAvalGrid", a);
-
-                Item emergencia = new Item("Emergencias", null, a);
-                Item emergenciaBuscar = new Item("Lista de Emergencias", "SIN", "poliza.png", "getEmergenciaGrid", a);
-
-                Item funerario = new Item("Funerarios", null, a);
-                Item searchFune = new Item("Lista de Gastos Funerarios", "SIN", "poliza.png", "getFunerarioGrid", a);
-
-                Item reembolsos = new Item("Reembolsos", null, a);
-                Item searchReem = new Item("Lista de Reembolsos", "SIN", "poliza.png", "getReembolsoGrid", a);
-
-                Item vida = new Item("Vida", null, a);
-                Item searchVida = new Item("Lista de Imdemnizaccion por Vida", "SIN", "poliza.png", "getVidaGrid", a);
-
-                Item buscarDetSin = new Item("Buscar", "SIN", "find.png", "getBuscarDetalleSin", a);
+                Item buscarDetSin = new Item("Buscar Detalles", "SIN", "find.png", "getBuscarDetalleSin", a);
 
                 siniestro.getItems().add(siniestroNuevo);
-                siniestro.getItems().add(siniestros);
+//                siniestro.getItems().add(siniestros);
                 siniestro.getItems().add(buscarSin);
-                siniestro.getItems().add(aps);
-                aps.getItems().add(searchAps);
-
-                siniestro.getItems().add(ayudaSocial);
-                ayudaSocial.getItems().add(searchAS);
-
-                siniestro.getItems().add(cartaAval);
-                cartaAval.getItems().add(searchAval);
-
-                siniestro.getItems().add(emergencia);
-                emergencia.getItems().add(emergenciaBuscar);
-
-                siniestro.getItems().add(funerario);
-                funerario.getItems().add(searchFune);
-
-                siniestro.getItems().add(reembolsos);
-                reembolsos.getItems().add(searchReem);
-
-                siniestro.getItems().add(vida);
-                vida.getItems().add(searchVida);
+//                siniestro.getItems().add(aps);
+//                aps.getItems().add(searchAps);
+//
+//                siniestro.getItems().add(ayudaSocial);
+//                ayudaSocial.getItems().add(searchAS);
+//
+//                siniestro.getItems().add(cartaAval);
+//                cartaAval.getItems().add(searchAval);
+//
+//                siniestro.getItems().add(emergencia);
+//                emergencia.getItems().add(emergenciaBuscar);
+//
+//                siniestro.getItems().add(funerario);
+//                funerario.getItems().add(searchFune);
+//
+//                siniestro.getItems().add(reembolsos);
+//                reembolsos.getItems().add(searchReem);
+//
+//                siniestro.getItems().add(vida);
+//                vida.getItems().add(searchVida);
 
                 siniestro.getItems().add(buscarDetSin);
             }
@@ -149,18 +149,22 @@ public class LlenarMenu {
             {
                 Item pago = new Item("Nuevo Pago", "PAG", "money.png", "getNewPago", a);
                 Item persPag = new Item("Lista de Personas a Pagar", "PAG", "85.png", "getPersonasAPagarGridFrame", a);
-                Item todos = new Item("Lista de Pagos", "PAG", "85.png", "getPagosGrid", a);
+//                Item todos = new Item("Lista de Pagos", "PAG", "85.png", "getPagosGrid", a);
+                Item buscarOrdenes = new Item("Buscar Pagos", "PAG", "find.png", "getOrdenesDePago", a);
+
                 Item rem = new Item("Nueva Remesa",
                         "PAG", "money.png", "getNewRemesa", a);
-                Item remList = new Item("Lista de Remesas",
-                        "PAG", "85.png", "getGridRemesa", a);
+//                Item remList = new Item("Lista de Remesas",
+//                        "PAG", "85.png", "getGridRemesa", a);
+                Item buscarRem = new Item("Buscar Remesa", "PAG", "find.png", "getRemesas", a);
 
                 pays.getItems().add(pago);
                 pays.getItems().add(persPag);
-                pays.getItems().add(todos);
+//                pays.getItems().add(todos);
+                pays.getItems().add(buscarOrdenes);
                 pays.getItems().add(rem);
-                pays.getItems().add(remList);
-
+//                pays.getItems().add(remList);
+                pays.getItems().add(buscarRem);
             }
             root.getItems().add(pays);
             // </editor-fold>

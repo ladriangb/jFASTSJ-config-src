@@ -27,22 +27,16 @@ public class ActualizarParametros_1 {
 
 
 
-//4716
-
-//1673
-        String sql = "FROM " + Siniestro.class.getName() + " where ayo=?";
-        List<Siniestro> l = s.createQuery(sql).setInteger(0, 2010).setFirstResult(0).setMaxResults(10).list();
-        System.out.println("---------*----------------");
-        System.out.println("---------*----------------");
-        System.out.println("---------*----------------");
-        System.out.println("---------*----------------");
-        System.out.println("---------*----------------");
         System.out.println("---------*----------------");
 
+      
         s.beginTransaction();
-        int i = s.createQuery("UPDATE " + DetalleSiniestro.class.getName()
-                + " D SET D.fechaLiquidado=? WHERE siniestro in (:sini)").
-                setDate(0, new Date()).setParameterList("sini", l).executeUpdate();
+        int i = s.createQuery("SELECT C.monto as D FROM "
+                        + "                  RangoValor.class.getName()"
+                        + "                  C WHERE C.prontoPago.persona.id =:pp "
+                        + "                  AND (date(:fp)-f.fechaFacturado) "
+                        + "                  BETWEEN C.minValue AND C.maxValue").
+                setDate(0, new Date()).executeUpdate();
 
         System.out.println(i);
         s.getTransaction().commit();
