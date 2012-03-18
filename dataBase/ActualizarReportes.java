@@ -13,10 +13,8 @@ import com.jswitch.pagos.modelo.maestra.Remesa;
 import com.jswitch.persona.modelo.maestra.Persona;
 import com.jswitch.persona.modelo.maestra.PersonaNatural;
 import com.jswitch.siniestros.modelo.maestra.DetalleSiniestro;
-import com.jswitch.siniestros.modelo.maestra.detalle.APS;
-import com.jswitch.siniestros.modelo.maestra.detalle.CartaAval;
+import com.jswitch.siniestros.modelo.maestra.DiagnosticoSiniestro;
 import com.jswitch.siniestros.modelo.maestra.detalle.Emergencia;
-import com.jswitch.siniestros.modelo.maestra.detalle.Reembolso;
 import org.hibernate.Transaction;
 import org.hibernate.classic.Session;
 
@@ -48,6 +46,16 @@ public class ActualizarReportes {
         list.add(new Reporte(Dominios.CategoriaReporte.PERSONAS, 0, "PER-D001", "Personas x Nombre", "Todas las Personas", "FROM " + Persona.class.getName() + " as P ORDER BY nombreLargo", "Carta 8½ x 11 Vertical", false, true, true,false));
         list.add(new Reporte(Dominios.CategoriaReporte.PERSONAS, 0, "PER-D002", "Personas, Telefono, Direccion", "Todas las Personas con sus Telefonos y Direcciones", "FROM " + Persona.class.getName() + " as P ORDER BY nombreLargo", "Carta 8½ x 11 Vertical", false, true, true, false));
         list.add(new Reporte(Dominios.CategoriaReporte.PERSONAS, 0, "PER-D003", "Personas Naturales, Fecha Nacimiento, Sexo, Telefono y Direccion.", "Personas segun su Tipo, con Telefonos y Direccions", "FROM " + PersonaNatural.class.getName() + " as P ORDER BY nombreLargo", "Carta 8½ x 11 Vertical", false, true, true, false));
+        list.add(new Reporte(Dominios.CategoriaReporte.PERSONAS, 0, "PER-D004", "Personas x Tipo", "Todas las Personas", "SELECT DISTINCT P.nombreLargo AS nombreLargo, T.nombre AS nombre FROM com.jswitch.persona.modelo.maestra.Persona AS P LEFT JOIN P.tiposPersona AS T ORDER BY T.nombre, P.nombreLargo", "Carta 8½ x 11 Vertical", false, true, true,true));
+        list.add(new Reporte(Dominios.CategoriaReporte.PERSONAS, 0, "PER-D005", "Personas x Banco", "Todas las Personas", "SELECT DISTINCT P.nombreLargo AS nombreLargo, B.banco.nombreLargo AS nombre FROM com.jswitch.persona.modelo.maestra.Persona AS P LEFT JOIN P.cuentasBancarias AS B ORDER BY B.banco.nombreLargo, P.nombreLargo", "Carta 8½ x 11 Vertical", false, true, true,true));
+
+        list.add(new Reporte(Dominios.CategoriaReporte.ASEGURADOS, 0, "PAGO_D_FACTURAS_001", 
+                "ASEGURADOS ACTUALES EN EL FONDO ADMINISTRADO DE SALUD", 
+                "Todos los Asegurados que NO han egresado", 
+                "FROM " + Asegurado.class.getName() + " as P "
+                + "WHERE P.detalleSiniestro.personaPago.id=18017 AND P.detalleSiniestro.etapaSiniestro.idPropio IN ('LIQ','ORD_PAG') "
+                + "ORDER BY P.detalleSiniestro.personaPago.id, P.detalleSiniestro.siniestro.certificado.titular.tipoContrato.id ", "Carta 8½ x 11 Vertical", 
+                false, true, true, false));                        
         
         list.add(new Reporte(Dominios.CategoriaReporte.PAGOS, 0, "PAGO_D_FACTURAS_001", 
                 "PAGOS PENDIENTES", 
@@ -55,103 +63,37 @@ public class ActualizarReportes {
                 "FROM " + Factura.class.getName() + " as P "
                 + "WHERE P.detalleSiniestro.personaPago.id=18017 AND P.detalleSiniestro.etapaSiniestro.idPropio IN ('LIQ','ORD_PAG') "
                 + "ORDER BY P.detalleSiniestro.personaPago.id, P.detalleSiniestro.siniestro.certificado.titular.tipoContrato.id ", "Carta 8½ x 11 Vertical", 
-                false, true, true, false));
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.PAGOS, 0, "LIQ_SINI_REM_D001", 
-                "LIQUIDACION", 
-                "Liquidacion de un Reembolso", 
-                "FROM " + Reembolso.class.getName() + " as P "
-                + "WHERE P.id=93739"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));
-
-        list.add(new Reporte(Dominios.CategoriaReporte.PAGOS, 0, "LIQ_SINI_CLINICAS_D001", 
-                "LIQUIDACION", 
-                "Liquidacion de un siniestro", 
-                "FROM " + DetalleSiniestro.class.getName() + " as P "
-                + "WHERE P.id=93739"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));        
-
-        list.add(new Reporte(Dominios.CategoriaReporte.PAGOS, 0, "SIN_NOTA_COBERTURA_D001", 
-                "NOTA DE COBERTURA", 
-                "Nota de cobertura de un siniestro", 
-                "FROM " + DetalleSiniestro.class.getName() + " as P "
-                + "WHERE P.id=93739"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));                  
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SINI_APS_D001", 
-                "ORDEN DE ATENCION MEDICA PRIMARIA", 
-                "Orden de Atencion Médica Primaria", 
-                "FROM " + APS.class.getName() + " as P "
-                + "WHERE P.id=33018"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));       
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SIN_CARTAAVAL_D001", 
-                "CARTA AVAL", 
-                "Carta Aval", 
-                "FROM " + CartaAval.class.getName() + " as P "
-                + "WHERE P.id=31566"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));         
-
-        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SINI_EMERGENCIA_D001", 
-                "EMERGENCIA", 
-                "Orden por Servicio de Emergencia", 
-                "FROM " + Emergencia.class.getName() + " as P "
-                + "WHERE P.id=33239"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));           
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SIN_NOTASTECNICAS_D001", 
-                "NOTAS TECNICAS", 
-                "Notas tecnicas de un siniestro", 
-                "FROM " + CartaAval.class.getName() + " as P "
-                + "WHERE P.id=31566"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));         
-
-        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "ASE_SOL_REM_O_CARTAAVAL_D001", 
-                "SOLICITUD DE REEMBOLSO Y/O CARTA AVAL", 
-                "Solicitud de reembolso y/o Carta Aval", 
-                "FROM "+Asegurado.class.getName()+" as P "
-                + "WHERE P.id=26460"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));   
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "ASE_PLANILLA_INCLUSION_D001", 
-                "PLANILLA DE INCLUSION", 
-                "Planilla de Inclusion", 
-                "FROM "+Asegurado.class.getName()+" as P "
-                + "WHERE P.id=26460"
-                , "Carta 8½ x 11 Vertical", 
-                false, true, true, false));          
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.REMESAS, 0, "REM-R004", 
-                "Listado de Ordenes de Pago por Remesa", 
-                "Agrupados por Remesa, Nombre de Persona a Pagar", 
-                "FROM " + Remesa.class.getName() + " as P "
-                +"WHEER id=92926", 
-                "Carta 8½ x 11 Vertical", 
-                false, true, true, false));          
-        
-        list.add(new Reporte(Dominios.CategoriaReporte.REMESAS, 0, "REM-R001", 
-                "Listado de Ordenes de Pago por Remesa", 
-                "Agrupados por Remesa, Nombre de Persona a Pagar", 
-                "FROM " + OrdenDePago.class.getName() + " as P "
-                +" ORDER BY P.remesa.id, P.numeroOrden", 
-                "Carta 8½ x 11 Vertical", 
                 false, true, true, false));                
         
-        list.add(new Reporte(Dominios.CategoriaReporte.REMESAS, 0, "REM-R003", 
-                "Listado de Remesas", 
-                "Remesas cargadas", 
-                "FROM " + Remesa.class.getName() + " as P "
-                +"ORDER BY P.fechaPago", 
-                "Carta 8½ x 11 Horizontal", 
+
+        list.add(new Reporte(Dominios.CategoriaReporte.PAGOS, 0, "PAGO_D_FACTURAS_001", 
+                "PAGOS PAGADOS", 
+                "DESCRIP", 
+                "FROM " + Factura.class.getName() + " as P "
+                + "WHERE P.detalleSiniestro.etapaSiniestro.estatusSiniestro.nombre IN ('PAGADO') "
+                + "ORDER BY P.detalleSiniestro.siniestro.certificado.titular.tipoContrato.nombre, P.detalleSiniestro.personaPago.id", "Carta 8½ x 11 Vertical", 
                 false, true, true, false));
+    
+        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SINI_APS_D001", 
+                "ORDEN DE APS", 
+                "Orden de Atencion Médica Primaria", 
+                "FROM " + DetalleSiniestro.class.getName() + " as P "
+                + "WHERE P.id=31812 ",
+                //+ "ORDER BY P.detalleSiniestro.siniestro.certificado.titular.tipoContrato.nombre, P.detalleSiniestro.personaPago.id", 
+                "Carta 8½ x 11 Vertical", 
+                false, true, true, false));              
+
+        list.add(new Reporte(Dominios.CategoriaReporte.EMERGENCIAS, 0, "SINI_EMERGENCIA_D001", 
+                "ORDEN DE EMERGECIA", 
+                "Orden de Emergencia", 
+                "FROM " + Emergencia.class.getName() + " as P "
+                + "WHERE P.id=33239 ",
+                //+ "ORDER BY P.detalleSiniestro.siniestro.certificado.titular.tipoContrato.nombre, P.detalleSiniestro.personaPago.id", 
+                "Carta 8½ x 11 Vertical", 
+                false, true, true, false));            
+        
+        list.add(new Reporte(Dominios.CategoriaReporte.REMESA, 0, "REM-R001", "Listado de Ordenes de Pago por Remesa", "Agrupados por Remesa, Nombre de Persona a Pagar", "FROM " + OrdenDePago.class.getName() + " as P ORDER BY P.remesa.id, P.numeroOrden", "Carta 8½ x 11 Vertical", false, true, true, false));                
+        list.add(new Reporte(Dominios.CategoriaReporte.REMESA, 0, "REM-R003", "Listado de Remesas", "Remesas cargadas", "FROM " + Remesa.class.getName() + " as P ORDER BY P.fechaPago", "Carta 8½ x 11 Horizontal", false, true, true, false));                
         
         list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SIN-R001", "Listado de Diagnosticos Sinoiestros de Pago por Remesa", "Agrupados por Remesa, Nombre de Persona a Pagar", "SELECT P.diagnostico , P.montoPagado  FROM com.jswitch.siniestros.modelo.maestra.DiagnosticoSiniestro as P WHERE P.id=30921 ORDER BY P.diagnostico.nombre", "Carta 8½ x 11 Vertical", false, true, false, false));
 //        list.add(new Reporte(Dominios.CategoriaReporte.SINIESTROS, 0, "SIN-R001", "Listado de Diagnosticos Sinoiestros de Pago por Remesa", "Agrupados por Remesa, Nombre de Persona a Pagar", "FROM " + DiagnosticoSiniestro.class.getName() + " as P WHERE P.id=30921 ORDER BY P.diagnostico.nombre", "Carta 8½ x 11 Vertical", false, true, false));        
