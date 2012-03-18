@@ -60,10 +60,10 @@ public class LlenarMenu {
             {
                 Item cert = new Item("Nuevo", "CERT", "insert2.png", "getCertificadoNuevo", a);
                 Item certs = new Item("Todos", "CERT", "poliza.png", "getCertificados", a);
-//                Item buscar = new Item("Buscar", "CERT", "find.png", "AUN_NO_FUN", a);
+                Item buscar = new Item("Buscar", "CERT", "find.png", "getFindCertificado", a);
                 certificado.getItems().add(cert);
                 certificado.getItems().add(certs);
-//                certificado.getItems().add(buscar);
+                certificado.getItems().add(buscar);
             }
             root.getItems().add(certificado);
             // </editor-fold>
