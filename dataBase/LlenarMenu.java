@@ -153,7 +153,7 @@ public class LlenarMenu {
                 Item buscarOrdenes = new Item("Buscar Pagos", "PAG", "find.png", "getOrdenesDePago", a);
 
                 Item rem = new Item("Nueva Remesa",
-                        "PAG", "money.png", "getNewRemesa", a);
+                        "PAG", "poliza.png", "getNewRemesa", a);
 //                Item remList = new Item("Lista de Remesas",
 //                        "PAG", "85.png", "getGridRemesa", a);
                 Item buscarRem = new Item("Buscar Remesa", "PAG", "find.png", "getRemesas", a);
