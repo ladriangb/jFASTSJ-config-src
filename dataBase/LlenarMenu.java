@@ -158,8 +158,8 @@ public class LlenarMenu {
 //                        "PAG", "85.png", "getGridRemesa", a);
                 Item buscarRem = new Item("Buscar Remesa", "PAG", "find.png", "getRemesas", a);
 
-                pays.getItems().add(pago);
                 pays.getItems().add(persPag);
+                pays.getItems().add(pago);
 //                pays.getItems().add(todos);
                 pays.getItems().add(buscarOrdenes);
                 pays.getItems().add(rem);
