@@ -175,31 +175,20 @@ public class LlenarMenu {
             {//Mantenimiento Roles
                 Item asegurados = new Item("Asegurados", null, a);
                 {
-                    Item departamento = new Item("Departamentos", "ASE", null, "getDepartamento", a);
-                    Item contrato = new Item("Tipo Contrato Nomina", "ASE", null, "getTipoContrato", a);
-                    Item parentescos = new Item("Parentescos", "ASE", null, "getParentesco", a);
-                    Item plazosEspera = new Item("Plazos de Escpera", "ASE", null, "getPlazoEspera", a);
-                    Item recalculo = new Item("Recalcular Prima y Edad", "ASE", null, null, a);
+                    Item departamento = new Item("Departamentos", "ASE", "home.png", "getDepartamento", a);
+                    Item contrato = new Item("Tipo Contrato Nomina", "ASE", "money.png", "getTipoContrato", a);
+                    Item parentescos = new Item("Parentescos", "ASE", "titulares.png", "getParentesco", a);
+                    Item plazosEspera = new Item("Plazos de Escpera", "ASE", "wallet.png", "getPlazoEspera", a);
+//                    Item recalculo = new Item("Recalcular Prima y Edad", "ASE", null, null, a);
 
                     asegurados.getItems().add(departamento);
                     asegurados.getItems().add(contrato);
                     asegurados.getItems().add(parentescos);
                     asegurados.getItems().add(plazosEspera);
-                    asegurados.getItems().add(recalculo);
+//                    asegurados.getItems().add(recalculo);
                 }
                 mantenimiento.getItems().add(asegurados);
 
-                Item pagos = new Item("Pagos", null, a);
-                {
-                    Item cob = new Item("Coberturas",
-                            "PAG", "rols.png", "getCoberturas", a);
-                    Item confCob = new Item("Configurar Coberturas",
-                            "PAG", "ramos_manager.png", "getConfiguracionCoberturas", a);
-                    pagos.getItems().add(cob);
-                    pagos.getItems().add(confCob);
-
-                }
-                mantenimiento.getItems().add(pagos);
                 Item convenio = new Item("Convenios", null, a);
                 {
                     Item pp = new Item("Descuento Pronto Pago",
@@ -244,14 +233,12 @@ public class LlenarMenu {
 
                 {
                     Item planes = new Item("Planes", "MAN", "planes.png", "getPlan", a);
-
-                    Item RamoCobertura = new Item("Ramo-Cobertura",
-                            "MAN", "ramo-cobertura.png", "getRamoCobertura", a);
-
+                    Item confCob = new Item("Configurar Coberturas",
+                            "PAG", "ramos_manager.png", "getConfiguracionCoberturas", a);
                     Item configPrima = new Item("Configuracion Prima",
                             "MAN", "settings.png", "getConfiguracionPrima", a);
                     polizas.getItems().add(planes);
-                    polizas.getItems().add(RamoCobertura);
+                    polizas.getItems().add(confCob);
                     polizas.getItems().add(configPrima);
                 }
                 mantenimiento.getItems().add(polizas);
@@ -303,11 +290,12 @@ public class LlenarMenu {
                     Item configuracion = new Item("Configuracion",
                             "MAN", "miscellaneous2.png", "getConfiguracion", a);
                     mantSistema.getItems().add(configuracion);
-                    if (General.usuario.getAdministrador()) {
-                        Item licencias = new Item("Licencias",
-                                "MAN", "miscellaneous2.png", "getLicencias", a);
-                        mantSistema.getItems().add(licencias);
-                    }
+//                    if (General.usuario.getAdministrador()) {
+//                    }
+                    Item licencias = new Item("Licencias",
+                            "MAN", "miscellaneous2.png", "getLicencias", a);
+                    mantSistema.getItems().add(licencias);
+
 
                     Item configLnF = new Item("Configuracion Look and Feel",
                             "MAN", "settings.png", "getConfigLnF", a);
