@@ -178,7 +178,7 @@ public class LlenarMenu {
                     Item departamento = new Item("Departamentos", "ASE", "home.png", "getDepartamento", a);
                     Item contrato = new Item("Tipo Contrato Nomina", "ASE", "money.png", "getTipoContrato", a);
                     Item parentescos = new Item("Parentescos", "ASE", "titulares.png", "getParentesco", a);
-                    Item plazosEspera = new Item("Plazos de Escpera", "ASE", "wallet.png", "getPlazoEspera", a);
+                    Item plazosEspera = new Item("Plazos de Espera", "ASE", "wallet.png", "getPlazoEspera", a);
 //                    Item recalculo = new Item("Recalcular Prima y Edad", "ASE", null, null, a);
 
                     asegurados.getItems().add(departamento);
