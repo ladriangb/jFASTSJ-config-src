@@ -206,8 +206,8 @@ public class Crear {
 
     private void tipoCuentaBancaria(AuditoriaBasica a) {
         ArrayList<TipoCuentaBancaria> list = new ArrayList<TipoCuentaBancaria>(0);
-        list.add(new TipoCuentaBancaria("AHORRO","00", a));
-        list.add(new TipoCuentaBancaria("CORRIENTE","11", a));
+        list.add(new TipoCuentaBancaria("AHORRO", "00", a));
+        list.add(new TipoCuentaBancaria("CORRIENTE", "11", a));
         list.add(new TipoCuentaBancaria("TARJETA DE CREDITO", a));
         list.add(new TipoCuentaBancaria("TARJETA DE DEBITO", a));
         for (TipoCuentaBancaria o : list) {
@@ -222,8 +222,10 @@ public class Crear {
         list.add(new TipoDocumento("CERTIFICADO MEDICO", Dominios.Modulos.PERSONAS, a));
         list.add(new TipoDocumento("LICENCIA DE CONDUCIR", Dominios.Modulos.PERSONAS, a));
         list.add(new TipoDocumento("PARTIDA DE NACIMIENTO", Dominios.Modulos.PERSONAS, a));
-        list.add(new TipoDocumento("ACTA DE MATRIMONIO", Dominios.Modulos.PERSONAS, a));
-        list.add(new TipoDocumento("CARTA DE CONCUBINATO", Dominios.Modulos.PERSONAS, a));
+        list.add(new TipoDocumento("ACTA DE MATRIMONIO", Dominios.Modulos.ASEGURADOS, a));
+        list.add(new TipoDocumento("CARTA DE CONCUBINATO", Dominios.Modulos.ASEGURADOS, a));
+        list.add(new TipoDocumento("FOTO", Dominios.Modulos.TITULARES, 
+                new AuditoriaBasica(a.getFechaInsert(), a.getUsuarioInsert(), Boolean.TRUE, Boolean.FALSE, Boolean.FALSE, Boolean.TRUE)));
         list.add(new TipoDocumento("FOTO", Dominios.Modulos.PERSONAS, a));
         list.add(new TipoDocumento("FACTURA", Dominios.Modulos.SINIESTROS, a));
         list.add(new TipoDocumento("INFORME MEDICO", Dominios.Modulos.SINIESTROS, a));

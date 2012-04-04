@@ -73,11 +73,13 @@ public class LlenarMenu {
             {
                 Item asegurados = new Item("Lista Asegurados", "ASE", "asegurado.png", "getAsegurados", a);
                 Item agotamiento = new Item("Agotamiento por Asegurado", "ASE", "certificados.png", "getAgotamiento", a);
+                Item revision = new Item("Revisiones de Asegurado", "ASE", "documents.png", "getRevisiones", a);
                 Item beneficiarios = new Item("Lista Beneficiarios", "ASE", "asegurado.png", "getBeneficiarios", a);
                 Item titulares = new Item("Lista Titulares", "ASE", "titulares.png", "getTitulares", a);
                 Item buscar = new Item("Buscar Asegurados", "ASE", "find.png", "getBuscarAsegurado", a);
                 aseguradosFolder.getItems().add(asegurados);
                 aseguradosFolder.getItems().add(agotamiento);
+                aseguradosFolder.getItems().add(revision);
                 aseguradosFolder.getItems().add(beneficiarios);
                 aseguradosFolder.getItems().add(titulares);
                 aseguradosFolder.getItems().add(buscar);
@@ -147,7 +149,7 @@ public class LlenarMenu {
             // <editor-fold defaultstate="collapsed" desc="Pagos">
             Item pays = new Item("Pagos", null, a);
             {
-                Item pago = new Item("Nuevo Pago", "PAG", "money.png", "getNewPago", a);
+//                Item pago = new Item("Nuevo Pago", "PAG", "money.png", "getNewPago", a);
                 Item persPag = new Item("Lista de Personas a Pagar", "PAG", "85.png", "getPersonasAPagarGridFrame", a);
 //                Item todos = new Item("Lista de Pagos", "PAG", "85.png", "getPagosGrid", a);
                 Item buscarOrdenes = new Item("Buscar Pagos", "PAG", "find.png", "getOrdenesDePago", a);
@@ -158,13 +160,17 @@ public class LlenarMenu {
 //                        "PAG", "85.png", "getGridRemesa", a);
                 Item buscarRem = new Item("Buscar Remesa", "PAG", "find.png", "getRemesas", a);
 
+                Item buscarfac = new Item("Buscar Facturas", "PAG", "find.png", "getFacturas", a);
+                Item exportSenieat = new Item("Facturas SENIAT", "PAG", "printer.png", "getExportSeniat", a);
                 pays.getItems().add(persPag);
-                pays.getItems().add(pago);
+//               pays.getItems().add(pago);
 //                pays.getItems().add(todos);
                 pays.getItems().add(buscarOrdenes);
                 pays.getItems().add(rem);
 //                pays.getItems().add(remList);
                 pays.getItems().add(buscarRem);
+                pays.getItems().add(buscarfac);
+                pays.getItems().add(exportSenieat);
             }
             root.getItems().add(pays);
             // </editor-fold>
