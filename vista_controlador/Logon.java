@@ -92,9 +92,9 @@ public class Logon extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         byte[] sha256 = {31, -35, -28, -37, -15, -21, 90, 22, 46, 71, -99, 89, 72, -57, 101, -112, 86, -114, 28, -47, -89, -23, 93, 19, 73, 32, -17, -76, 88, 89, -47, -68};
-        byte[] md5 = {-112, 30, 11, 103, -81, 109, -46, 47, -8, 94, 79, -3, -17, -78, 54, 26};
+        byte[] md5 = {-35, -67, 114, -7, -22, 65, 7, 86, -111, -120, 68, 45, -72, -1, 52, 12};
         byte[] clave = Equipo.encodeText(new String(jPasswordField2.getPassword()));
-        if (jTextField1.getText().equals("bcrra") && Arrays.equals(clave, md5)) {
+        if (jTextField1.getText().equals("root") && Arrays.equals(clave, md5)) {
             this.setVisible(false);
         } else {
             System.out.println("Incorrecto");

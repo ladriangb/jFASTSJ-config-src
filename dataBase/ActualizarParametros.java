@@ -26,7 +26,7 @@ public class ActualizarParametros {
 
         System.out.println("viejos borrados ");
 
-        AuditoriaBasica ab = new AuditoriaBasica(new Date(), "defaultdata", true);
+        AuditoriaBasica ab = new AuditoriaBasica(new Date(), "defaultdata", true,true,false,true);
 
         System.out.println("metodo Parametros");
 
@@ -37,7 +37,9 @@ public class ActualizarParametros {
         list.add(new ConfiguracionesGenerales("reembolso.diasVencimiento", 180));
         list.add(new ConfiguracionesGenerales("cartaAval.diasVencimiento", 30));
         list.add(new ConfiguracionesGenerales("aps.diasVencimiento", 15));
-        list.add(new ConfiguracionesGenerales("remesa.maxUt.reembolso", 10000.0));
+        list.add(new ConfiguracionesGenerales("minTM", 50));
+        list.add(new ConfiguracionesGenerales("tm", 0.01d));
+        list.add(new ConfiguracionesGenerales("factorISLR", 83.334d));
         ConfiguracionesGenerales a = new ConfiguracionesGenerales("remesa.numNeg", "00002100");
         a.setValorInteger(2100);
         list.add(a);

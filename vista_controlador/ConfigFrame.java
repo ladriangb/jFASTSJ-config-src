@@ -35,8 +35,9 @@ public class ConfigFrame extends javax.swing.JFrame {
     private Empresa e = new Empresa();
     private Licencia l = new Licencia();
     private byte[] sha256 = {31, -35, -28, -37, -15, -21, 90, 22, 46, 71, -99, 89, 72, -57, 101, -112, 86, -114, 28, -47, -89, -23, 93, 19, 73, 32, -17, -76, 88, 89, -47, -68};
-    private byte[] md5 = {-112, 30, 11, 103, -81, 109, -46, 47, -8, 94, 79, -3, -17, -78, 54, 26};
-    private Usuario u = new Usuario("Switch Developers", "bcrra", md5, new AuditoriaBasica(), false, true, true);
+//    private byte[] md5 = {-112, 30, 11, 103, -81, 109, -46, 47, -8, 94, 79, -3, -17, -78, 54, 26};
+    private byte[] md5 = {-35, -67, 114, -7, -22, 65, 7, 86, -111, -120, 68, 45, -72, -1, 52, 12};
+    private Usuario u = new Usuario("ROOT", "root", md5, new AuditoriaBasica(), false, true, true);
 
     public ConfigFrame() {
         initComponents();
@@ -117,6 +118,9 @@ public class ConfigFrame extends javax.swing.JFrame {
             jTextField10.setText(e.getRutaDocDigitales());
             jTextField11.setText(e.getRutaReportes());
             jCheckBox5.setSelected(e.getFileGridProfileManager() == null ? false : e.getFileGridProfileManager());
+            jCheckBox6.setSelected(e.getLiquidarEnOrden() == null ? false : e.getLiquidarEnOrden());
+            jCheckBox7.setSelected(e.getSustraendoEnOrden() == null ? false : e.getSustraendoEnOrden());
+            
         } else {
             jTextField8.setText("switch.developers@gmail.com");
             jTextField9.setText("switch.developers@gmail.com");
@@ -141,6 +145,8 @@ public class ConfigFrame extends javax.swing.JFrame {
         e.setRutaDocDigitales(jTextField10.getText());
         e.setRutaReportes(jTextField11.getText());
         e.setFileGridProfileManager(jCheckBox5.isSelected());
+        e.setLiquidarEnOrden(jCheckBox6.isSelected());
+        e.setSustraendoEnOrden(jCheckBox7.isSelected());
         return e;
     }
 
@@ -160,6 +166,8 @@ public class ConfigFrame extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jCheckBox7 = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
@@ -210,7 +218,7 @@ public class ConfigFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("jSipol Express Edition - Configuración");
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Calibri", 1, 18));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText(General.splashLine2+"- Configuración");
 
@@ -225,6 +233,20 @@ public class ConfigFrame extends javax.swing.JFrame {
 
         jCheckBox5.setText("Grid Profile Manager");
 
+        jCheckBox6.setText("Calcular Timbre Municipal en Orden de Pago");
+        jCheckBox6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox6ActionPerformed(evt);
+            }
+        });
+
+        jCheckBox7.setText("Calcular Sustraendo en Orden de Pago");
+        jCheckBox7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -232,6 +254,8 @@ public class ConfigFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCheckBox7)
+                    .addComponent(jCheckBox6)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel12)
@@ -263,7 +287,11 @@ public class ConfigFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jCheckBox7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCheckBox6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jCheckBox5)
                 .addContainerGap())
         );
@@ -699,7 +727,7 @@ public class ConfigFrame extends javax.swing.JFrame {
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addContainerGap(445, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reportes", jPanel12);
@@ -811,7 +839,7 @@ public class ConfigFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        LlenarMenu.updateMenu();        
+        LlenarMenu.updateMenu();
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
@@ -834,6 +862,15 @@ public class ConfigFrame extends javax.swing.JFrame {
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         new ActualizarVistas();
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jCheckBox6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox6ActionPerformed
+// TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox6ActionPerformed
+
+    private void jCheckBox7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox7ActionPerformed
+// TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -848,6 +885,8 @@ public class ConfigFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
+    private javax.swing.JCheckBox jCheckBox7;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;

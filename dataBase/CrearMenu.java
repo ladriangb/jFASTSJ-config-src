@@ -119,7 +119,7 @@ public class CrearMenu {
         Rol rootRol = (Rol) getData(Rol.class.getName()).get(1);
         for (Object object : usuarios) {
             Usuario usuario = (Usuario) object;
-            if (usuario.getUserName().compareTo("bcrra") == 0) {
+            if (usuario.getUserName().compareTo("root") == 0) {
                 usuario.setRol(admin);
                 usuario.setSuperusuario(Boolean.TRUE);
                 usuario.setModificarPermisos(Boolean.TRUE);

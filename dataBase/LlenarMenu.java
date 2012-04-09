@@ -347,10 +347,9 @@ public class LlenarMenu {
             // </editor-fold>
 
             // <editor-fold defaultstate="collapsed" desc="Soporte Tecnico">
-            Item helpCenter = new Item("Soporte Técnico",
-                    "HelpCenter", "helpcenter.png", "getHelpCenter", a);
-
-            root.getItems().add(helpCenter);
+//            Item helpCenter = new Item("Soporte Técnico",
+//                    "HelpCenter", "helpcenter.png", "getHelpCenter", a);
+//            root.getItems().add(helpCenter);
             // </editor-fold>
 
             // <editor-fold defaultstate="collapsed" desc="Salir">
